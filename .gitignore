@@ -1,0 +1,11 @@
+.vs/
+Debug/
+*.txt
+*.lst
+*.sdf
+*.sln
+*.v12
+*.suo
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
