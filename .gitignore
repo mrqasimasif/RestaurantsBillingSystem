@@ -1,6 +1,5 @@
 .vs/
 Debug/
-*.txt
 *.lst
 *.sdf
 *.sln
