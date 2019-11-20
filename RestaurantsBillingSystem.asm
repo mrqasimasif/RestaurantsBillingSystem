@@ -49,7 +49,7 @@ pMenu    BYTE " Restaurant Transylvania proudly present our Menu ... ", 0ah, 0dh
          BYTE "		Pineapple Juice : 69 per Glass. ", 0ah, 0dh
          BYTE "		Mint Margarita  : 64 per Glass. ", 0ah, 0dh
 		 BYTE "		Coffee          : 89 per Cup. ", 0ah, 0dh
-		 BYTE "		Tea             : 49 per Cup. ", 0ah, 0dh, 0
+		 BYTE "		Tea             : 49 per Cup. ", 0
 
 deals    BYTE " *** Deals and Offers *** ", 0ah, 0dh                          ; TODO.......
 
@@ -109,7 +109,9 @@ caption BYTE "Error", 0
 
 errMsg  BYTE " Please follow instructions correctly... ", 0
 
-billing BYTE  "      Total Bill:   Rs ", 0
+billMsg BYTE  "    Total Bill:   Rs ", 0
+
+exitMsg BYTE "     We are always glad to serve our Customers... ", 0ah, 0dh, 0
 
 haltMsg BYTE " Press Enter to continue... ", 0
 
@@ -145,8 +147,7 @@ main PROC
 		jmp  op
 
 		pm:                                                         ; Price Menu Tag...
-		   call printMenu
-		   
+		   call printMenu  
 		   jmp  op
 
         do:                                                          ; Deals and Offers Tag...
@@ -162,16 +163,9 @@ main PROC
 		   jmp op
 
 	 _exit:                                                          ; Exit Tag
-           cmp bill, 0
-		   jg  L1
+		   call printBill
 
-		   mov edx, OFFSET options                                  ; Printing options...
-	       call writeString
-
-		   L1:
-		      
-
-	      exit
+	       exit
 
 main ENDP
 
@@ -188,8 +182,10 @@ printMenu PROC
 		   call crlf
 
 		   mov edx, OFFSET pMenu
-	       call writeString 
+	       call writeString
+
 		   call halt
+
 		   POPFD                                                     ; Poping flags in revrse order...
 		   POPFD                                                     ; Poping regs in revrse order...
 
@@ -271,13 +267,17 @@ printBill PROC
 
 		   call crlf
 
-		   mov edx, OFFSET reMsg
+		   mov edx, OFFSET billMsg
 	       call writeString 
 
 		   mov eax, bill
 		   call writeInt
 
-		   call halt
+		  ; call halt
+		   call crlf
+
+		   mov edx, OFFSET exitMsg                                 ; Printing Exit Note/Msg...
+	       call writeString
 
 		   POPFD
 		   POPFD
@@ -294,6 +294,7 @@ halt PROC
 	  PUSHFD
 
 	  call crlf
+	  call crlf
 
       mov edx, OFFSET haltMsg
 	  call writeString
@@ -307,7 +308,7 @@ halt ENDP
 
 ;-------------------------------------------------------------------
 ;| Shows an Error Box to customers...                               |
-;| Uses:  2 strings an input for box...                             |
+;| Uses:  2 strings for an input   box...                           |
 ;| Advan: It also works as a pause...                               |
 ;-------------------------------------------------------------------
 
