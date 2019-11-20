@@ -57,7 +57,7 @@ cMenu    BYTE " *** Menu *** ", 0ah, 0dh, 0ah, 0dh                            ; 
          BYTE " Enter 1 : For Oriental.", 0ah, 0dh
 		 BYTE " Enter 2 : For Chinese.", 0ah, 0dh
 		 BYTE " Enter 3 : For Fast Food.", 0ah, 0dh
-		 BYTE " Enter 4 : For Desert.", 0ah, 0dh
+		 BYTE " Enter 4 : For Dessert.", 0ah, 0dh
 		 BYTE " Enter 5 : For Drinks.", 0ah, 0dh
 		 BYTE " Enter 6 : To Exit.", 0ah, 0dh, 0
 
@@ -126,7 +126,7 @@ main PROC
 	 call crlf
 	 call crlf
 
-	 op:                                                         ; Option Tag...  
+     op:                                                         ; Option Tag...  
 		mov edx, OFFSET options                                  ; Printing options...
 	    call writeString
 
@@ -148,7 +148,8 @@ main PROC
 		jmp  op
 
 		pm:                                                         ; Price Menu Tag...
-		   call printMenu  
+		   call printMenu
+		   call halt
 		   jmp  op
 
         do:                                                          ; Deals and Offers Tag...
@@ -161,9 +162,10 @@ main PROC
 
         rb:                                                          ; Reset Bill Tag...
 	       call resetBill
+		   call halt
 		   jmp op
 
-	 _exit:                                                          ; Exit Tag
+     _exit:                                                          ; Exit Tag
 		   call printBill
 
 	       exit
@@ -185,17 +187,15 @@ printMenu PROC
 		   mov edx, OFFSET pMenu
 	       call writeString
 
-		   call halt
-
 		   POPFD                                                     ; Poping flags in revrse order...
 		   POPAD                                                     ; Poping regs in revrse order...
 
-		   ret
+		   RET
 printMenu ENDP
 
 ;-------------------------------------------------------------------
 ;| Print Deals and Offers with Prices for customers...              |
-;| Uses:   pMenu string to print...                                 |
+;| Uses:   deals string to print...                                 |
 ;| update: bill according to selected Deals and Offers              |
 ;-------------------------------------------------------------------
 
@@ -211,29 +211,122 @@ dealsOffers PROC
 		     POPFD
 		     POPAD
 
-	    	 ret
+	    	 RET
 dealsOffers ENDP
 
 ;-------------------------------------------------------------------
-;| Print Deals and Offers with Prices for customers...              |
+;| Print Menu with Prices for customers to order...                 |
 ;| Uses:   pMenu string to print...                                 |
-;| update: bill according to selected Deals and Offers...           |
 ;-------------------------------------------------------------------
 
 choiceMenu PROC
              PUSHAD
 		     PUSHFD
 
-			 call crlf
+			 op:                                                  ; Option Tag...
+			    call crlf
 
-		     mov edx, OFFSET cMenu
-	         call writeString 
+		        mov edx, OFFSET cMenu
+	            call writeString
 
+		        call crlf
+		        call readInt
+
+	            cmp eax, 1
+		        je  ot
+		        cmp eax, 2
+		        je  cn
+		        cmp eax, 3
+		        je  ff
+		        cmp eax, 4
+		        je  de
+		        cmp eax, 5
+		        je  dr
+				cmp eax, 6
+		        je  _exit
+
+		        call error                                             ; calling error Proc...
+		        jmp  op
+
+		        ot:                                                    ; Oriental Tag...
+		           call OrientalMenu
+		           ;call halt
+		           jmp  op
+
+                cn:                                                    ; Chinese Tag...
+	               call ChineseMenu
+		           jmp op
+
+                ff:                                                     ; Fast Food Tag...
+	               call FastFoodMenu
+		           jmp op
+
+               de:                                                      ; Dessert Tag...
+		          call DessertMenu
+		          jmp op
+
+		       dr:                                                      ; Drinks Tag...
+	              call DrinksMenu
+		          ;call halt
+		          jmp op
+
+	   _exit:                                                          ; Exit Tag
 		     POPFD
 		     POPAD
 
-	    	 ret
+	    	 RET
 choiceMenu ENDP
+
+OrientalMenu PROC
+			  PUSHAD
+			  PUSHFD
+
+			  POPFD
+			  POPAD
+
+			  RET
+OrientalMenu ENDP
+
+
+ChineseMenu PROC
+			 PUSHAD
+			 PUSHFD
+
+			 POPFD
+			 POPAD
+
+			 RET
+ChineseMenu ENDP
+
+FastFoodMenu PROC
+			  PUSHAD
+			  PUSHFD
+
+			  POPFD
+			  POPAD
+
+			  RET
+FastFoodMenu ENDP
+
+DessertMenu PROC
+			 PUSHAD
+			 PUSHFD
+
+			 POPFD
+			 POPAD
+
+			 RET
+DessertMenu ENDP
+
+DrinksMenu PROC
+			PUSHAD
+			PUSHFD
+
+			POPFD
+			POPAD
+
+			RET
+DrinksMenu ENDP
 
 ;-------------------------------------------------------------------
 ;| Print a message for customers...                                 |
@@ -252,12 +345,10 @@ resetBill PROC
 
 		   mov bill, 0                                                 ; Making bill 0...
 
-		   call halt
-
 		   POPFD
 		   POPAD
 
-	       ret
+	       RET
 resetBill ENDP
 
 ;-------------------------------------------------------------------
@@ -284,7 +375,7 @@ printBill PROC
 		   POPFD
 		   POPAD
 
-	       ret
+	       RET
 printBill ENDP
 
 ;-------------------------------------------------------------------
@@ -308,7 +399,7 @@ halt PROC
 	  POPFD
 	  POPAD
 
-	  ret
+	  RET
 halt ENDP
 
 ;-------------------------------------------------------------------
@@ -330,7 +421,7 @@ error PROC
 	   POPFD
 	   POPAD
 
-	   ret
+	   RET
 error ENDP
 
 END main
