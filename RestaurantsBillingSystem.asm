@@ -53,8 +53,9 @@ pMenu    BYTE " Restaurant Transylvania proudly present our Menu ... ", 0ah, 0dh
 
 deals    BYTE " *** Deals and Offers *** ", 0ah, 0dh, 0                       ; TODO.......
 
-cMenu    BYTE " Enter 1 : For Oriental.", 0ah, 0dh                            ; Choice Menu...
-         BYTE " Enter 2 : For Chinese.", 0ah, 0dh
+cMenu    BYTE " *** Menu *** ", 0ah, 0dh, 0ah, 0dh                            ; Choice Menu...
+         BYTE " Enter 1 : For Oriental.", 0ah, 0dh
+		 BYTE " Enter 2 : For Chinese.", 0ah, 0dh
 		 BYTE " Enter 3 : For Fast Food.", 0ah, 0dh
 		 BYTE " Enter 4 : For Desert.", 0ah, 0dh
 		 BYTE " Enter 5 : For Drinks.", 0ah, 0dh
@@ -223,6 +224,8 @@ choiceMenu PROC
              PUSHAD
 		     PUSHFD
 
+			 call crlf
+
 		     mov edx, OFFSET cMenu
 	         call writeString 
 
@@ -273,8 +276,7 @@ printBill PROC
 		   mov eax, bill
 		   call writeInt
 
-		  ; call halt
-		   call crlf
+		   call halt
 
 		   mov edx, OFFSET exitMsg                                 ; Printing Exit Note/Msg...
 	       call writeString
@@ -298,7 +300,10 @@ halt PROC
 
       mov edx, OFFSET haltMsg
 	  call writeString
+
 	  call readInt
+	  call crlf
+	  call crlf
 
 	  POPFD
 	  POPAD
