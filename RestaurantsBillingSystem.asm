@@ -12,7 +12,6 @@ welcome  BYTE " *** Welcome To Restaurant Transylvania *** ", 0       ; Welcome 
                  
 options  BYTE " Enter 1 : To see our Menu and Prices.", 0ah, 0dh
          BYTE " Enter 2 : To see our Deals and Offers.", 0ah, 0dh
-<<<<<<< HEAD
 		 BYTE " Enter 3 : To place an Order.", 0ah, 0dh
 		 BYTE " Enter 4 : To Reset the bill [Cancel the order].", 0ah, 0dh
 		 BYTE " Enter 5 : To Exit.", 0ah, 0dh , 0
@@ -126,8 +125,8 @@ main PROC
 	 call crlf
 	 call crlf
 
-	 op:                                                         ; Option Tag...
-	    mov edx, OFFSET options                                  ; Printing options...
+	 op:                                                         ; Option Tag...  
+		mov edx, OFFSET options                                  ; Printing options...
 	    call writeString
 
 		call crlf
