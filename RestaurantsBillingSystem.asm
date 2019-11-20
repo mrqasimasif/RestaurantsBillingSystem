@@ -187,7 +187,7 @@ printMenu PROC
 		   call halt
 
 		   POPFD                                                     ; Poping flags in revrse order...
-		   POPFD                                                     ; Poping regs in revrse order...
+		   POPAD                                                     ; Poping regs in revrse order...
 
 		   ret
 printMenu ENDP
@@ -208,7 +208,7 @@ dealsOffers PROC
 	         call writeString 
 
 		     POPFD
-		     POPFD
+		     POPAD
 
 	    	 ret
 dealsOffers ENDP
@@ -227,7 +227,7 @@ choiceMenu PROC
 	         call writeString 
 
 		     POPFD
-		     POPFD
+		     POPAD
 
 	    	 ret
 choiceMenu ENDP
@@ -252,7 +252,7 @@ resetBill PROC
 		   call halt
 
 		   POPFD
-		   POPFD
+		   POPAD
 
 	       ret
 resetBill ENDP
@@ -280,7 +280,7 @@ printBill PROC
 	       call writeString
 
 		   POPFD
-		   POPFD
+		   POPAD
 
 	       ret
 printBill ENDP
@@ -301,7 +301,7 @@ halt PROC
 	  call readInt
 
 	  POPFD
-	  POPFD
+	  POPAD
 
 	  ret
 halt ENDP
@@ -323,7 +323,7 @@ error PROC
 	   call MsgBox
 
 	   POPFD
-	   POPFD
+	   POPAD
 
 	   ret
 error ENDP
