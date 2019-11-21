@@ -73,10 +73,11 @@ oriental BYTE " *** Oriental *** ", 0ah, 0dh
 		 BYTE " Enter 9 : To Exit. ", 0ah, 0dh, 0
 
 chinese  Byte " *** Chinese *** ", 0ah, 0dh
-         BYTE " Enter 1 : Chicken Manchurian with rice : 169 per Plate ", 0ah, 0dh
-         BYTE " Enter 2 : Egg Fried Rice               : 149 per Plate ", 0ah, 0dh
-         BYTE " Enter 3 : Chicken Macroni              :  99 per Plate ", 0ah, 0dh
-         BYTE " Enter 4 : Chicken Shahlik              :  79 per Plate ", 0ah, 0dh
+         BYTE " Enter 1 : Chicken Manchurian with rice : 169 per Dish ", 0ah, 0dh
+         BYTE " Enter 2 : Egg Fried Rice               : 149 per Dish ", 0ah, 0dh
+         BYTE " Enter 3 : Chicken Macroni              :  99 per Dish ", 0ah, 0dh
+         BYTE " Enter 4 : Chicken Shahlik              :  79 per Dish ", 0ah, 0dh
+         BYTE " Enter 4 : Chicken Shahlik              :  79 per Dish ", 0ah, 0dh
 		 BYTE " Enter 5 : To Exit. ", 0ah, 0dh, 0
 
 fastFood BYTE " *** Fast Food *** ", 0ah, 0dh
@@ -105,6 +106,8 @@ drinks   BYTE " *** Drinks *** ", 0ah, 0dh
          BYTE " Enter 9 : To Exit. ", 0ah, 0dh , 0
 
 reMsg   BYTE " Your Order has been Canceled... ", 0ah, 0dh, 0
+
+dishes BYTE " Enter the Quantity:  ", 0
 
 caption BYTE "Error", 0
 
@@ -250,7 +253,6 @@ choiceMenu PROC
 
 		        ot:                                                    ; Oriental Tag...
 		           call OrientalMenu
-		           ;call halt
 		           jmp  op
 
                 cn:                                                    ; Chinese Tag...
@@ -267,7 +269,6 @@ choiceMenu PROC
 
 		       dr:                                                      ; Drinks Tag...
 	              call DrinksMenu
-		          ;call halt
 		          jmp op
 
 	   _exit:                                                          ; Exit Tag
@@ -281,6 +282,135 @@ OrientalMenu PROC
 			  PUSHAD
 			  PUSHFD
 
+			  op:                                                  ; Option Tag...
+			     call crlf
+
+		         mov edx, OFFSET oriental
+	            call writeString
+
+		        call crlf
+		        call readInt
+
+	            cmp eax, 1
+		        je  cq
+		        cmp eax, 2
+		        je  pu
+		        cmp eax, 3
+		        je  cb
+		        cmp eax, 4
+		        je  ck 
+		        cmp eax, 5
+		        je  ct 
+				cmp eax, 6
+				je  mh
+				cmp eax, 7
+				je  na
+				cmp eax, 8
+				je  rt
+				cmp eax, 9
+				je  _exit
+
+
+		        call error                                             ; calling error Proc...
+		        jmp  op
+
+		        cq:                                                    ; Chicken Quorma Tag...
+		           mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt                                        ; Taking input for quantity...
+
+				   mov edx, OFFSET oPrice
+				   mul edx                                             ; Mul quantity with price...
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp  op
+
+                pu:                                                    ; Pullao Tag...
+	               mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt
+
+				   mov edx, OFFSET oPrice + 4
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp op
+
+                cb:                                                     ; Chicken Briyani Tag...
+	               mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt
+
+				   mov edx, OFFSET oPrice + 8
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp op
+
+                ck:                                                     ; Chicken Karahi Tag...
+		           mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt
+
+				   mov edx, OFFSET oPrice + 12
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp op
+
+		        ct:                                                     ; Chicken Tikka Tag...
+	               mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt
+
+				   mov edx, OFFSET oPrice + 16
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp op
+
+			    mh:                                                     ; Murgh Haleem Tag...
+	               mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt
+
+				   mov edx, OFFSET oPrice + 20
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp op
+
+			    na:                                                     ; Naan Tag...
+	               mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt
+
+				   mov edx, OFFSET oPrice + 24
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp op
+
+			    rt:                                                      ; Roti Tag...
+	               mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt
+
+				   mov edx, OFFSET oPrice + 28
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp op
+	   _exit:                                                          ; Exit Tag
 			  POPFD
 			  POPAD
 
