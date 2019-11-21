@@ -620,6 +620,82 @@ DessertMenu PROC
 			 PUSHAD
 			 PUSHFD
 
+			 op:                                                  ; Option Tag...
+			    call crlf
+
+		        mov edx, OFFSET dessert
+	            call writeString
+
+		        call crlf
+		        call readInt
+
+	            cmp eax, 1
+		        je  pc
+		        cmp eax, 2
+		        je  cc
+		        cmp eax, 3
+		        je  cu
+		        cmp eax, 4
+		        je  ic
+		        cmp eax, 5
+				je  _exit
+
+
+		        call error                                             ; calling error Proc...
+		        jmp  op
+
+		        pc:                                                    ; Pineapple Cake Tag...
+		           mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt                                        ; Taking input for quantity...
+
+				   mov ebx, [dePrice]
+				   mul ebx                                             ; Mul quantity with price...
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp  op
+
+                cc:                                                    ; Choclate Cake Rice Tag...
+	               mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt                                        ; Taking input for quantity...
+
+				   mov ebx, [dePrice + 4]
+				   mul ebx                                             ; Mul quantity with price...
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp  op
+
+                cu:                                                     ; Custard Tag...
+	               mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt                                        ; Taking input for quantity...
+
+				   mov ebx, [dePrice + 8]
+				   mul ebx                                             ; Mul quantity with price...
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp  op
+					 
+                ic:                                                     ; Ice-Cream Tag...
+		           mov edx, OFFSET dishes
+	               call writeString
+
+				   call readInt                                        ; Taking input for quantity...
+
+				   mov ebx, [dePrice + 12]
+				   mul ebx                                             ; Mul quantity with price...
+				   add eax, bill
+				   mov bill, eax
+
+		           jmp  op
+	   _exit:                                                          ; Exit Tag
 			 POPFD
 			 POPAD
 
