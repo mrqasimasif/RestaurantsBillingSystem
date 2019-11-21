@@ -3,7 +3,7 @@ INCLUDE Irvine32.inc
 .DATA
 bill     DWORD 0                                                      ; To store the bill...
 oPrice   DWORD 169, 149, 99, 89, 69, 69, 10, 5                        ; To store the prices of Oriental...
-cPrice   DWORD 169, 149, 99, 79                                       ; To store the prices of Chiness...
+cPrice   DWORD 169, 149, 99, 79                                       ; To store the prices of Chinese...
 fPrice   DWORD 149, 99, 79, 49                                        ; To store the prices of Fast Food...
 dePrice  DWORD 799, 699, 99, 69                                       ; To store the prices of Dessert...
 drPrice  DWORD 99, 99, 49 ,49, 69, 64, 89, 49                         ; To store the prices of Drinks...
@@ -12,8 +12,8 @@ welcome  BYTE " *** Welcome To Restaurant Transylvania *** ", 0       ; Welcome 
                  
 options  BYTE " Enter 1 : To see our Menu and Prices.", 0ah, 0dh
          BYTE " Enter 2 : To see our Deals and Offers.", 0ah, 0dh
-		 BYTE " Enter 3 : To place an Order.", 0ah, 0dh
-		 BYTE " Enter 4 : To Reset the bill [Cancel the order].", 0ah, 0dh
+		 BYTE " Enter 3 : To Place an Order.", 0ah, 0dh
+		 BYTE " Enter 4 : To Reset the Bill [Cancel the order].", 0ah, 0dh
 		 BYTE " Enter 5 : To Exit.", 0ah, 0dh , 0
 		                                                               ; Price Menu...
 pMenu    BYTE " Restaurant Transylvania proudly present our Menu ... ", 0ah, 0dh, 0ah, 0dh
@@ -29,8 +29,8 @@ pMenu    BYTE " Restaurant Transylvania proudly present our Menu ... ", 0ah, 0dh
 		 BYTE " *** Chinese *** ", 0ah, 0dh
          BYTE "		Chicken Manchurian with rice : 169 per Plate ", 0ah, 0dh
          BYTE "		Egg Fried Rice               : 149 per Plate ", 0ah, 0dh
-         BYTE "		Chicken Macroni              :  99 per Plate ", 0ah, 0dh
-         BYTE "		Chicken Shahlik              :  79 per Plate ", 0ah, 0dh, 0ah, 0dh
+         BYTE "		Chicken Macaroni             :  99 per Plate ", 0ah, 0dh
+         BYTE "		Chicken Shashlik             :  79 per Plate ", 0ah, 0dh, 0ah, 0dh
          BYTE " *** Fast Food *** ", 0ah, 0dh
          BYTE "		Chicken Pizza    : 149 per Pizza. ", 0ah, 0dh
          BYTE "		Zinger Burger    :  99 per Piece. ", 0ah, 0dh
@@ -38,7 +38,7 @@ pMenu    BYTE " Restaurant Transylvania proudly present our Menu ... ", 0ah, 0dh
          BYTE "		French Fries     :  49 per Packet. ", 0ah, 0dh,  0ah, 0dh
          BYTE " *** Dessert *** ", 0ah, 0dh
          BYTE "		Pineapple Cake    : 799 per Pound. ", 0ah, 0dh
-         BYTE "		Choclate Cake     : 699 per Pound. ", 0ah, 0dh
+         BYTE "		Chocolate Cake    : 699 per Pound. ", 0ah, 0dh
          BYTE "		Custard           :  99 per Bowl. ", 0ah, 0dh
          BYTE "		Ice-cream         :  69 per Cup. ", 0ah, 0dh, 0ah, 0dh
          BYTE " *** Drinks *** ",  0ah, 0dh
@@ -75,9 +75,8 @@ oriental BYTE " *** Oriental *** ", 0ah, 0dh
 chinese  Byte " *** Chinese *** ", 0ah, 0dh
          BYTE " Enter 1 : Chicken Manchurian with rice : 169 per Dish ", 0ah, 0dh
          BYTE " Enter 2 : Egg Fried Rice               : 149 per Dish ", 0ah, 0dh
-         BYTE " Enter 3 : Chicken Macroni              :  99 per Dish ", 0ah, 0dh
-         BYTE " Enter 4 : Chicken Shahlik              :  79 per Dish ", 0ah, 0dh
-         BYTE " Enter 4 : Chicken Shahlik              :  79 per Dish ", 0ah, 0dh
+         BYTE " Enter 3 : Chicken Macaroni             :  99 per Dish ", 0ah, 0dh
+         BYTE " Enter 4 : Chicken Shashlik             :  79 per Dish ", 0ah, 0dh
 		 BYTE " Enter 5 : To Exit. ", 0ah, 0dh, 0
 
 fastFood BYTE " *** Fast Food *** ", 0ah, 0dh
@@ -89,7 +88,7 @@ fastFood BYTE " *** Fast Food *** ", 0ah, 0dh
 
 dessert  BYTE " *** Dessert *** ", 0ah, 0dh
          BYTE " Enter 1 : Pineapple Cake    : 799 per Pound. ", 0ah, 0dh
-         BYTE " Enter 2 : Choclate Cake     : 699 per Pound. ", 0ah, 0dh
+         BYTE " Enter 2 : Chocolate Cake    : 699 per Pound. ", 0ah, 0dh
          BYTE " Enter 3 : Custard           :  99 per Bowl. ", 0ah, 0dh
          BYTE " Enter 4 : Ice-cream         :  69 per Cup. ", 0ah, 0dh
 		 BYTE " Enter 5 : To Exit. ", 0ah, 0dh, 0
@@ -176,7 +175,7 @@ main PROC
 main ENDP
 
 ;-------------------------------------------------------------------
-;| Print Menue with Prices for customers...                         |
+;| Print Menu with Prices for customers...                          |
 ;| Uses:   pMenu string to print...                                 |
 ;| Note: push then pop regs and flags in stack to make them const   |
 ;-------------------------------------------------------------------
@@ -190,8 +189,8 @@ printMenu PROC
 		   mov edx, OFFSET pMenu
 	       call writeString
 
-		   POPFD                                                     ; Poping flags in revrse order...
-		   POPAD                                                     ; Poping regs in revrse order...
+		   POPFD                                                     ; Popping flags in reverse order...
+		   POPAD                                                     ; Popping regs in reverse order...
 
 		   RET
 printMenu ENDP
@@ -488,7 +487,7 @@ ChineseMenu PROC
 
 		           jmp  op
 
-                mn:                                                   ; Chicken Macroni Tag...
+                mn:                                                   ; Chicken Macaroni Tag...
 	               mov edx, OFFSET dishes
 	               call writeString
 
@@ -501,7 +500,7 @@ ChineseMenu PROC
 
 		           jmp  op
 
-                sh:                                                    ; Chicken Shahlik Tag...
+                sh:                                                    ; Chicken Shashlik Tag...
 		           mov edx, OFFSET dishes
 	               call writeString
 
@@ -657,7 +656,7 @@ DessertMenu PROC
 
 		           jmp  op
 
-                cc:                                                  ; Choclate Cake Rice Tag...
+                cc:                                                  ; Chocolate Cake Rice Tag...
 	               mov edx, OFFSET dishes
 	               call writeString
 
