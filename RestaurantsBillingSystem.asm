@@ -528,82 +528,83 @@ ChineseMenu ENDP
 FastFoodMenu PROC
 			  PUSHAD
 			  PUSHFD
-			 op:                                                  ; Option Tag...
-			    call crlf
 
-		        mov edx, OFFSET chinese
-	            call writeString
+			  op:                                                  ; Option Tag...
+			     call crlf
 
-		        call crlf
-		        call readInt
+		         mov edx, OFFSET fastFood
+	             call writeString
 
-	            cmp eax, 1
-		        je  cm
-		        cmp eax, 2
-		        je  fr
-		        cmp eax, 3
-		        je  mn
-		        cmp eax, 4
-		        je  sh 
-		        cmp eax, 5
-				je  _exit
+		         call crlf
+		         call readInt
+
+	             cmp eax, 1
+		         je  cp
+		         cmp eax, 2
+		         je  zb
+		         cmp eax, 3
+		         je  sw
+		         cmp eax, 4
+		         je  ff
+		         cmp eax, 5
+				 je  _exit
 
 
-		        call error                                             ; calling error Proc...
-		        jmp  op
+		         call error                                             ; calling error Proc...
+		         jmp  op
 
-		        cm:                                                    ; Chicken Manchurian Tag...
-		           mov edx, OFFSET dishes
-	               call writeString
+		         cp:                                                    ; Chicken Pizza Tag...
+		            mov edx, OFFSET dishes
+	                call writeString
 
-				   call readInt                                        ; Taking input for quantity...
+				    call readInt                                        ; Taking input for quantity...
 
-				   mov ebx, [cPrice]
-				   mul ebx                                             ; Mul quantity with price...
-				   add eax, bill
-				   mov bill, eax
+				    mov ebx, [fPrice]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
 
-		           jmp  op
+		            jmp  op
 
-                fr:                                                    ; Egg Fried Rice Tag...
-	               mov edx, OFFSET dishes
-	               call writeString
+                 zb:                                                    ; Zinger Burger Rice Tag...
+	                mov edx, OFFSET dishes
+	                call writeString
 
-				   call readInt                                        ; Taking input for quantity...
+				    call readInt                                        ; Taking input for quantity...
 
-				   mov ebx, [cPrice + 4]
-				   mul ebx                                             ; Mul quantity with price...
-				   add eax, bill
-				   mov bill, eax
+				    mov ebx, [fPrice + 4]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
 
-		           jmp  op
+		            jmp  op
 
-                mn:                                                     ; Chicken Macroni Tag...
-	               mov edx, OFFSET dishes
-	               call writeString
+                 sw:                                                     ; Chicken Shawarma Tag...
+	                mov edx, OFFSET dishes
+	                call writeString
 
-				   call readInt                                        ; Taking input for quantity...
+				    call readInt                                        ; Taking input for quantity...
 
-				   mov ebx, [cPrice + 8]
-				   mul ebx                                             ; Mul quantity with price...
-				   add eax, bill
-				   mov bill, eax
+				    mov ebx, [fPrice + 8]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
 
-		           jmp  op
+		            jmp  op
+					 
+                 ff:                                                     ; French Fries Tag...
+		            mov edx, OFFSET dishes
+	                call writeString
 
-                sh:                                                     ; Chicken Shahlik Tag...
-		           mov edx, OFFSET dishes
-	               call writeString
+				    call readInt                                        ; Taking input for quantity...
 
-				   call readInt                                        ; Taking input for quantity...
+				    mov ebx, [fPrice + 12]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
 
-				   mov ebx, [cPrice + 12]
-				   mul ebx                                             ; Mul quantity with price...
-				   add eax, bill
-				   mov bill, eax
-
-		           jmp  op
-	   _exit:                                                          ; Exit Tag
+		            jmp  op
+	    _exit:                                                          ; Exit Tag
 			  POPFD
 			  POPAD
 
