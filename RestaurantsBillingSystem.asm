@@ -278,6 +278,11 @@ choiceMenu PROC
 	    	 RET
 choiceMenu ENDP
 
+;-------------------------------------------------------------------
+;| Print Oriental Menu with Prices for customers to order...        |
+;| Updates: Bill ...                                                |
+;-------------------------------------------------------------------
+
 OrientalMenu PROC
 			  PUSHAD
 			  PUSHFD
@@ -286,6 +291,157 @@ OrientalMenu PROC
 			     call crlf
 
 		         mov edx, OFFSET oriental
+	             call writeString
+
+		         call crlf
+		         call readInt
+
+	             cmp eax, 1
+		         je  cq
+		         cmp eax, 2
+		         je  pu
+		         cmp eax, 3
+		         je  cb
+		         cmp eax, 4
+		         je  ck 
+		         cmp eax, 5
+		         je  ct 
+				 cmp eax, 6
+				 je  mh
+				 cmp eax, 7
+				 je  na
+				 cmp eax, 8
+				 je  rt
+				 cmp eax, 9
+				 je  _exit
+
+
+		         call error                                             ; calling error Proc...
+		         jmp  op
+
+		         cq:                                                    ; Chicken Quorma Tag...
+		            mov edx, OFFSET dishes
+	                call writeString
+
+				    call readInt                                        ; Taking input for quantity...
+
+  				    mov ebx, [oPrice]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
+
+		            jmp  op
+
+                 pu:                                                    ; Pullao Tag...
+	                mov edx, OFFSET dishes
+	                call writeString
+
+				    call readInt                                        ; Taking input for quantity...
+
+				    mov ebx, [oPrice + 4]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
+
+		            jmp  op
+
+                 cb:                                                     ; Chicken Briyani Tag...
+	                mov edx, OFFSET dishes
+	                call writeString
+
+				    call readInt                                        ; Taking input for quantity...
+
+				    mov ebx, [oPrice + 8]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
+
+		            jmp  op
+
+                 ck:                                                     ; Chicken Karahi Tag...
+		            mov edx, OFFSET dishes
+	                call writeString
+
+				    call readInt                                        ; Taking input for quantity...
+
+				    mov ebx, [oPrice + 12]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
+
+		            jmp  op
+
+		         ct:                                                     ; Chicken Tikka Tag...
+	                mov edx, OFFSET dishes
+	                call writeString
+
+				    call readInt                                        ; Taking input for quantity...
+
+				    mov ebx, [oPrice + 16]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
+
+		            jmp  op
+
+			     mh:                                                     ; Murgh Haleem Tag...
+	                mov edx, OFFSET dishes
+	                call writeString
+
+				    call readInt                                        ; Taking input for quantity...
+
+				    mov ebx, [oPrice + 20]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
+
+		            jmp  op
+
+			     na:                                                     ; Naan Tag...
+	                mov edx, OFFSET dishes
+	                call writeString
+
+				    call readInt                                        ; Taking input for quantity...
+
+				    mov ebx, [oPrice + 24]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
+
+		            jmp  op
+
+			     rt:                                                      ; Roti Tag...
+	                mov edx, OFFSET dishes
+	                call writeString
+
+				    call readInt                                        ; Taking input for quantity...
+
+				    mov ebx, [oPrice + 28]
+				    mul ebx                                             ; Mul quantity with price...
+				    add eax, bill
+				    mov bill, eax
+
+		            jmp  op
+	    _exit:                                                          ; Exit Tag
+			  POPFD
+			  POPAD
+
+			  RET
+OrientalMenu ENDP
+
+;-------------------------------------------------------------------
+;| Print Chinese Menu with Prices for customers to order...         |
+;| Updates: Bill ...                                                |
+;-------------------------------------------------------------------
+
+ChineseMenu PROC
+			 PUSHAD
+			 PUSHFD
+
+			 op:                                                  ; Option Tag...
+			    call crlf
+
+		        mov edx, OFFSET oriental
 	            call writeString
 
 		        call crlf
@@ -320,8 +476,8 @@ OrientalMenu PROC
 
 				   call readInt                                        ; Taking input for quantity...
 
-				   mov edx, OFFSET oPrice
-				   mul edx                                             ; Mul quantity with price...
+				   mov ebx, [oPrice]
+				   mul ebx                                             ; Mul quantity with price...
 				   add eax, bill
 				   mov bill, eax
 
@@ -331,102 +487,103 @@ OrientalMenu PROC
 	               mov edx, OFFSET dishes
 	               call writeString
 
-				   call readInt
+				   call readInt                                        ; Taking input for quantity...
 
-				   mov edx, OFFSET oPrice + 4
+				   mov ebx, [oPrice + 4]
+				   mul ebx                                             ; Mul quantity with price...
 				   add eax, bill
 				   mov bill, eax
 
-		           jmp op
+		           jmp  op
 
                 cb:                                                     ; Chicken Briyani Tag...
 	               mov edx, OFFSET dishes
 	               call writeString
 
-				   call readInt
+				   call readInt                                        ; Taking input for quantity...
 
-				   mov edx, OFFSET oPrice + 8
+				   mov ebx, [oPrice + 8]
+				   mul ebx                                             ; Mul quantity with price...
 				   add eax, bill
 				   mov bill, eax
 
-		           jmp op
+		           jmp  op
 
                 ck:                                                     ; Chicken Karahi Tag...
 		           mov edx, OFFSET dishes
 	               call writeString
 
-				   call readInt
+				   call readInt                                        ; Taking input for quantity...
 
-				   mov edx, OFFSET oPrice + 12
+				   mov ebx, [oPrice + 12]
+				   mul ebx                                             ; Mul quantity with price...
 				   add eax, bill
 				   mov bill, eax
 
-		           jmp op
+		           jmp  op
 
 		        ct:                                                     ; Chicken Tikka Tag...
 	               mov edx, OFFSET dishes
 	               call writeString
 
-				   call readInt
+				   call readInt                                        ; Taking input for quantity...
 
-				   mov edx, OFFSET oPrice + 16
+				   mov ebx, [oPrice + 16]
+				   mul ebx                                             ; Mul quantity with price...
 				   add eax, bill
 				   mov bill, eax
 
-		           jmp op
+		           jmp  op
 
 			    mh:                                                     ; Murgh Haleem Tag...
 	               mov edx, OFFSET dishes
 	               call writeString
 
-				   call readInt
+				   call readInt                                        ; Taking input for quantity...
 
-				   mov edx, OFFSET oPrice + 20
+				   mov ebx, [oPrice + 20]
+				   mul ebx                                             ; Mul quantity with price...
 				   add eax, bill
 				   mov bill, eax
 
-		           jmp op
+		           jmp  op
 
 			    na:                                                     ; Naan Tag...
 	               mov edx, OFFSET dishes
 	               call writeString
 
-				   call readInt
+				   call readInt                                        ; Taking input for quantity...
 
-				   mov edx, OFFSET oPrice + 24
+				   mov ebx, [oPrice + 24]
+				   mul ebx                                             ; Mul quantity with price...
 				   add eax, bill
 				   mov bill, eax
 
-		           jmp op
+		           jmp  op
 
 			    rt:                                                      ; Roti Tag...
 	               mov edx, OFFSET dishes
 	               call writeString
 
-				   call readInt
+				   call readInt                                        ; Taking input for quantity...
 
-				   mov edx, OFFSET oPrice + 28
+				   mov ebx, [oPrice + 28]
+				   mul ebx                                             ; Mul quantity with price...
 				   add eax, bill
 				   mov bill, eax
 
-		           jmp op
+		           jmp  op
 	   _exit:                                                          ; Exit Tag
-			  POPFD
-			  POPAD
-
-			  RET
-OrientalMenu ENDP
-
-
-ChineseMenu PROC
-			 PUSHAD
-			 PUSHFD
-
 			 POPFD
 			 POPAD
 
 			 RET
 ChineseMenu ENDP
+
+;-------------------------------------------------------------------
+;| Print Fast Food Menu with Prices for customers to order...       |
+;| Updates: Bill ...                                                |
+;-------------------------------------------------------------------
 
 FastFoodMenu PROC
 			  PUSHAD
@@ -438,6 +595,11 @@ FastFoodMenu PROC
 			  RET
 FastFoodMenu ENDP
 
+;-------------------------------------------------------------------
+;| Print Dessert Menu with Prices for customers to order...         |
+;| Updates: Bill ...                                                |
+;-------------------------------------------------------------------
+
 DessertMenu PROC
 			 PUSHAD
 			 PUSHFD
@@ -447,6 +609,11 @@ DessertMenu PROC
 
 			 RET
 DessertMenu ENDP
+
+;-------------------------------------------------------------------
+;| Print Drinks Menu with Prices for customers to order...          |
+;| Updates: Bill ...                                                |
+;-------------------------------------------------------------------
 
 DrinksMenu PROC
 			PUSHAD
