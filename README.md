@@ -1,6 +1,8 @@
 # RestaurantsBillingSystem
 
-This is a basic restaurants billing system in Assembly Language as part of my lab project.
+This is a intermediate restaurants billing system in Assembly Language as part of my lab project.
+
+With integer file Handling.
 
 It is consisted of Starter Menu that gives following options:
 
