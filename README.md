@@ -1,6 +1,7 @@
 # RestaurantsBillingSystem
 
-This is a intermediate restaurants billing system in Assembly Language as part of my lab project.
+This is a intermediate restaurants billing system in Assembly Language as part of my lab project. 
+<b>Password = 123</b>
 
 With integer file Handling.
 
