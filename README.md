@@ -1,6 +1,6 @@
 # RestaurantsBillingSystem
 
-This is a intermediate restaurants billing system in Assembly Language as part of my lab project. Password Protected with versatile <b>ADMIN</b> and <b>CUSTOMER</b> functionalties.
+This is a intermediate restaurants billing system in Assembly Language. Password Protected with versatile <b>ADMIN</b> and <b>CUSTOMER</b> functionalties.
 
 <b>Password = 123</b>
 
